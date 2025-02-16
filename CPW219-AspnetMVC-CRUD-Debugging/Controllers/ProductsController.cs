@@ -17,7 +17,6 @@ namespace CPW219_AspnetMVC_CRUD_Debugging.Controllers
         {
             Console.WriteLine("Product page pinged");
             return View(await _context.Product.ToListAsync());
-            //return View();
         }
 
         public IActionResult Create()
@@ -26,12 +25,18 @@ namespace CPW219_AspnetMVC_CRUD_Debugging.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Product product)
+        public IActionResult Create(Product product)
         {
             if (ModelState.IsValid)
             {
-                await _context.AddAsync(product);
+
+                //await _context.AddAsync(product);
+                _context.Product.Add(product);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
+            }
+            else { 
+                Console.WriteLine("Product not valid");
             }
             return View(product);
         }
@@ -61,6 +66,7 @@ namespace CPW219_AspnetMVC_CRUD_Debugging.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
+
             var product = await _context.Product
                 .FirstOrDefaultAsync(m => m.ProductId == id);
 
@@ -76,7 +82,14 @@ namespace CPW219_AspnetMVC_CRUD_Debugging.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var product = await _context.Product.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
             _context.Product.Remove(product);
+            await _context.SaveChangesAsync(); // Ensure changes are saved to the database
+
             return RedirectToAction(nameof(Index));
         }
 
