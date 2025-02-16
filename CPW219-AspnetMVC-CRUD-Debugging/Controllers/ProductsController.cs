@@ -15,7 +15,9 @@ namespace CPW219_AspnetMVC_CRUD_Debugging.Controllers
 
         public async Task<IActionResult> Index()
         {
+            Console.WriteLine("Product page pinged");
             return View(await _context.Product.ToListAsync());
+            //return View();
         }
 
         public IActionResult Create()

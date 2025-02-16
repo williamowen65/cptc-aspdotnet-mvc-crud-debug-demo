@@ -15,6 +15,7 @@ namespace CPW219_AspnetMVC_CRUD_Debugging.Controllers
 
         public IActionResult Index()
         {
+            Console.WriteLine("Home page hit");
             return View();
         }
 
