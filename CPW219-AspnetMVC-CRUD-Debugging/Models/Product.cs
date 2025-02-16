@@ -2,6 +2,9 @@
 
 namespace CPW219_AspnetMVC_CRUD_Debugging.Models
 {
+
+
+    // Suggested improvement: [Table("Products")]
     public class Product
     {
         [Key]
